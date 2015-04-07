@@ -1,0 +1,60 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{618498B1-7B82-4817-91E1-6722751D8312}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="mapi\MapiSample.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="indy\IndySample.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="synapse\SynapseSample.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="MapiSample">
+        <MSBuild Projects="mapi\MapiSample.dproj"/>
+    </Target>
+    <Target Name="MapiSample:Clean">
+        <MSBuild Projects="mapi\MapiSample.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MapiSample:Make">
+        <MSBuild Projects="mapi\MapiSample.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="IndySample">
+        <MSBuild Projects="indy\IndySample.dproj"/>
+    </Target>
+    <Target Name="IndySample:Clean">
+        <MSBuild Projects="indy\IndySample.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="IndySample:Make">
+        <MSBuild Projects="indy\IndySample.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="SynapseSample">
+        <MSBuild Projects="synapse\SynapseSample.dproj"/>
+    </Target>
+    <Target Name="SynapseSample:Clean">
+        <MSBuild Projects="synapse\SynapseSample.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="SynapseSample:Make">
+        <MSBuild Projects="synapse\SynapseSample.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="MapiSample;IndySample;SynapseSample"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="MapiSample:Clean;IndySample:Clean;SynapseSample:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="MapiSample:Make;IndySample:Make;SynapseSample:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
