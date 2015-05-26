@@ -10,6 +10,17 @@ type
   EIndyMailerException = class(EMailerException);
 
   TIndyMailerFactory = class sealed
+  strict private
+  const
+    CanNotBeInstantiatedException = 'This class can not be instantiated!';
+  strict private
+
+    {$HINTS OFF}
+
+    constructor Create;
+
+    {$HINTS ON}
+
   public
     class function Build(): IMailer; static;
   end;
@@ -19,7 +30,9 @@ implementation
 uses
   System.SysUtils,
   Mailer4D.Driver.Base,
-  IdSMTP, IdMessage, IdSSLOpenSSL, IdExplicitTLSClientServerBase, IdText, IdAttachmentFile;
+  IdSMTP, IdMessage, IdSSLOpenSSL,
+  IdExplicitTLSClientServerBase,
+  IdText, IdAttachmentFile;
 
 type
 
@@ -37,6 +50,11 @@ type
 class function TIndyMailerFactory.Build: IMailer;
 begin
   Result := TIndyMailerAdapter.Create;
+end;
+
+constructor TIndyMailerFactory.Create;
+begin
+  raise EIndyMailerException.Create(CanNotBeInstantiatedException);
 end;
 
 { TIndyMailerAdapter }

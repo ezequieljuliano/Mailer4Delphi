@@ -10,6 +10,17 @@ type
   ESynapseMailerException = class(EMailerException);
 
   TSynapseMailerFactory = class sealed
+  strict private
+  const
+    CanNotBeInstantiatedException = 'This class can not be instantiated!';
+  strict private
+
+    {$HINTS OFF}
+
+    constructor Create;
+
+    {$HINTS ON}
+
   public
     class function Build(): IMailer; static;
   end;
@@ -115,6 +126,11 @@ end;
 class function TSynapseMailerFactory.Build: IMailer;
 begin
   Result := TSynapseMailerAdapter.Create;
+end;
+
+constructor TSynapseMailerFactory.Create;
+begin
+  raise ESynapseMailerException.Create(CanNotBeInstantiatedException);
 end;
 
 end.

@@ -22,7 +22,7 @@ var
 implementation
 
 uses
-  Mailer4D.Driver.Base, Mailer4D.Driver.Mapi, Mailer4D;
+  Mailer4D, Mailer4D.Driver.Mapi;
 
 {$R *.dfm}
 

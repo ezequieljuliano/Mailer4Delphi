@@ -21,7 +21,7 @@ var
 implementation
 
 uses
-  Mailer4D.Driver.Base, Mailer4D.Driver.Synapse, Mailer4D;
+  Mailer4D, Mailer4D.Driver.Synapse;
 
 {$R *.dfm}
 

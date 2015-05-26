@@ -10,6 +10,17 @@ type
   EMapiMailerException = class(EMailerException);
 
   TMapiMailerFactory = class sealed
+  strict private
+  const
+    CanNotBeInstantiatedException = 'This class can not be instantiated!';
+  strict private
+
+    {$HINTS OFF}
+
+    constructor Create;
+
+    {$HINTS ON}
+
   public
     class function Build(const pAppHandle: THandle = 0; const pShowMailClient: Boolean = False): IMailer; static;
   end;
@@ -40,6 +51,11 @@ type
 class function TMapiMailerFactory.Build(const pAppHandle: THandle; const pShowMailClient: Boolean): IMailer;
 begin
   Result := TMapiMailerAdapter.Create(pAppHandle, pShowMailClient);
+end;
+
+constructor TMapiMailerFactory.Create;
+begin
+  raise EMapiMailerException.Create(CanNotBeInstantiatedException);
 end;
 
 { TMapiMailerAdapter }
