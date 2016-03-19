@@ -12,6 +12,9 @@
         <Projects Include="synapse\SynapseSample.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="outlook\OutlookSample.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -47,14 +50,23 @@
     <Target Name="SynapseSample:Make">
         <MSBuild Projects="synapse\SynapseSample.dproj" Targets="Make"/>
     </Target>
+    <Target Name="OutlookSample">
+        <MSBuild Projects="outlook\OutlookSample.dproj"/>
+    </Target>
+    <Target Name="OutlookSample:Clean">
+        <MSBuild Projects="outlook\OutlookSample.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="OutlookSample:Make">
+        <MSBuild Projects="outlook\OutlookSample.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="MapiSample;IndySample;SynapseSample"/>
+        <CallTarget Targets="MapiSample;IndySample;SynapseSample;OutlookSample"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="MapiSample:Clean;IndySample:Clean;SynapseSample:Clean"/>
+        <CallTarget Targets="MapiSample:Clean;IndySample:Clean;SynapseSample:Clean;OutlookSample:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="MapiSample:Make;IndySample:Make;SynapseSample:Make"/>
+        <CallTarget Targets="MapiSample:Make;IndySample:Make;SynapseSample:Make;OutlookSample:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
