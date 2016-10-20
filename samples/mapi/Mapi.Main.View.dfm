@@ -30,7 +30,7 @@ inherited MapiMainView: TMapiMainView
       Color = clInfoBk
       Enabled = False
     end
-    inherited EdtUserName: TEdit
+    inherited EdtUsername: TEdit
       Color = clInfoBk
       Enabled = False
     end

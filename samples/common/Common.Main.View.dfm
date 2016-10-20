@@ -39,9 +39,9 @@ object CommonMainView: TCommonMainView
     object Label3: TLabel
       Left = 420
       Top = 17
-      Width = 49
+      Width = 48
       Height = 13
-      Caption = 'UserName'
+      Caption = 'Username'
     end
     object LabelPass: TLabel
       Left = 644
@@ -64,7 +64,7 @@ object CommonMainView: TCommonMainView
       Height = 21
       TabOrder = 1
     end
-    object EdtUserName: TEdit
+    object EdtUsername: TEdit
       Left = 420
       Top = 33
       Width = 218

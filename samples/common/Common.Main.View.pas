@@ -14,7 +14,7 @@ type
     EdtHost: TEdit;
     EdtPort: TEdit;
     Label2: TLabel;
-    EdtUserName: TEdit;
+    EdtUsername: TEdit;
     Label3: TLabel;
     EdtPassword: TEdit;
     LabelPass: TLabel;

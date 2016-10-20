@@ -8,7 +8,8 @@ uses
   Vcl.Buttons;
 
 type
-  TForm2 = class(TCommonMainView)
+
+  TOutlookMainView = class(TCommonMainView)
     procedure BtnSendEmailClick(Sender: TObject);
   private
     { Private declarations }
@@ -17,35 +18,37 @@ type
   end;
 
 var
-  Form2: TForm2;
+  OutlookMainView: TOutlookMainView;
 
 implementation
 
 {$R *.dfm}
 
-uses Mailer4D.Driver.Outlook, Mailer4D.Driver.Base, Mailer4D;
+uses
+  Mailer4D,
+  Mailer4D.Outlook.Impl;
 
-procedure TForm2.BtnSendEmailClick(Sender: TObject);
+procedure TOutlookMainView.BtnSendEmailClick(Sender: TObject);
 var
   vMailer: IMailer;
-  I: Integer;
+  i: Integer;
 begin
   inherited;
-  vMailer := TOutlookMailerFactory.Build();
+  vMailer := TOutlookMailer.Create(True);
 
   vMailer.From(EdtFromName.Text, EdtFromAddress.Text);
 
-  for I := 0 to Pred(MnmTo.Lines.Count) do
-    vMailer.ToRecipient(MnmTo.Lines[I]);
+  for i := 0 to Pred(MnmTo.Lines.Count) do
+    vMailer.ToRecipient(MnmTo.Lines[i]);
 
-  for I := 0 to Pred(MnmCc.Lines.Count) do
-    vMailer.CcRecipient(MnmCc.Lines[I]);
+  for i := 0 to Pred(MnmCc.Lines.Count) do
+    vMailer.CcRecipient(MnmCc.Lines[i]);
 
-  for I := 0 to Pred(MnmBcc.Lines.Count) do
-    vMailer.BccRecipient(MnmBcc.Lines[I]);
+  for i := 0 to Pred(MnmBcc.Lines.Count) do
+    vMailer.BccRecipient(MnmBcc.Lines[i]);
 
-  for I := 0 to Pred(MnmAttachment.Lines.Count) do
-    vMailer.Attachment(MnmAttachment.Lines[I]);
+  for i := 0 to Pred(MnmAttachment.Lines.Count) do
+    vMailer.Attachment(MnmAttachment.Lines[i]);
 
   vMailer.Subject(EdtSubject.Text);
   vMailer.Message(MnmMessage.Lines.Text);

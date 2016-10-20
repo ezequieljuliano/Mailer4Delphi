@@ -22,36 +22,37 @@ var
 implementation
 
 uses
-  Mailer4D, Mailer4D.Driver.Mapi;
+  Mailer4D,
+  Mailer4D.Mapi.Impl;
 
 {$R *.dfm}
 
 procedure TMapiMainView.BtnSendEmailClick(Sender: TObject);
 var
-  vMailer: IMailer;
-  I: Integer;
+  mailer: IMailer;
+  i: Integer;
 begin
   inherited;
-  vMailer := TMapiMailerFactory.Build(Application.Handle, True);
+  mailer := TMapiMailer.Create(Application.Handle, True);
 
-  vMailer.From(EdtFromName.Text, EdtFromAddress.Text);
+  mailer.From(EdtFromName.Text, EdtFromAddress.Text);
 
-  for I := 0 to Pred(MnmTo.Lines.Count) do
-    vMailer.ToRecipient(MnmTo.Lines[I]);
+  for i := 0 to Pred(MnmTo.Lines.Count) do
+    mailer.ToRecipient(MnmTo.Lines[i]);
 
-  for I := 0 to Pred(MnmCc.Lines.Count) do
-    vMailer.CcRecipient(MnmCc.Lines[I]);
+  for i := 0 to Pred(MnmCc.Lines.Count) do
+    mailer.CcRecipient(MnmCc.Lines[i]);
 
-  for I := 0 to Pred(MnmBcc.Lines.Count) do
-    vMailer.BccRecipient(MnmBcc.Lines[I]);
+  for i := 0 to Pred(MnmBcc.Lines.Count) do
+    mailer.BccRecipient(MnmBcc.Lines[i]);
 
-  for I := 0 to Pred(MnmAttachment.Lines.Count) do
-    vMailer.Attachment(MnmAttachment.Lines[I]);
+  for i := 0 to Pred(MnmAttachment.Lines.Count) do
+    mailer.Attachment(MnmAttachment.Lines[i]);
 
-  vMailer.Subject(EdtSubject.Text);
-  vMailer.Message(MnmMessage.Lines.Text);
+  mailer.Subject(EdtSubject.Text);
+  mailer.Message(MnmMessage.Lines.Text);
 
-  vMailer.Send;
+  mailer.Send;
 end;
 
 end.

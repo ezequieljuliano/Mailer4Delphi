@@ -93,8 +93,8 @@
             <Form>CommonMainView</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="..\..\src\Mailer4D.Driver.Base.pas"/>
-        <DCCReference Include="..\..\src\Mailer4D.Driver.Indy.pas"/>
+        <DCCReference Include="..\..\src\Mailer4D.Base.Impl.pas"/>
+        <DCCReference Include="..\..\src\Mailer4D.Indy.Impl.pas"/>
         <DCCReference Include="..\..\src\Mailer4D.pas"/>
         <DCCReference Include="Indy.Main.View.pas">
             <Form>IndyMainView</Form>

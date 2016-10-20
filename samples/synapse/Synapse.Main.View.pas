@@ -7,6 +7,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Common.Main.View, Vcl.StdCtrls, Vcl.Buttons;
 
 type
+
   TSynapseMainView = class(TCommonMainView)
     procedure BtnSendEmailClick(Sender: TObject);
   private
@@ -21,7 +22,8 @@ var
 implementation
 
 uses
-  Mailer4D, Mailer4D.Driver.Synapse;
+  Mailer4D,
+  Mailer4D.Synapse.Impl;
 
 {$R *.dfm}
 
@@ -31,7 +33,7 @@ var
   I: Integer;
 begin
   inherited;
-  vMailer := TSynapseMailerFactory.Build;
+  vMailer := TSynapseMailer.Create;
 
   vMailer.Host(EdtHost.Text);
   vMailer.Port(StrToInt(EdtPort.Text));
@@ -39,13 +41,13 @@ begin
   vMailer.Password(EdtPassword.Text);
 
   if CbSSL.Checked then
-    vMailer.SSL();
+    vMailer.UsingSSL(True);
 
   if CbTLS.Checked then
-    vMailer.TLS();
+    vMailer.UsingTLS(True);
 
   if CbAuth.Checked then
-    vMailer.RequireAuth();
+    vMailer.AuthenticationRequired(True);
 
   vMailer.From(EdtFromName.Text, EdtFromAddress.Text);
 
@@ -62,10 +64,10 @@ begin
     vMailer.Attachment(MnmAttachment.Lines[I]);
 
   if CbConfirmation.Checked then
-    vMailer.Confirmation();
+    vMailer.AskForConfirmation(True);
 
   if CbHtml.Checked then
-    vMailer.HTML();
+    vMailer.UsingHTML(True);
 
   vMailer.Subject(EdtSubject.Text);
   vMailer.Message(MnmMessage.Lines.Text);

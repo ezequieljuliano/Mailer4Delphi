@@ -22,56 +22,57 @@ var
 implementation
 
 uses
-  Mailer4D, Mailer4D.Driver.Indy;
+  Mailer4D,
+  Mailer4D.Indy.Impl;
 
 {$R *.dfm}
 
 procedure TIndyMainView.BtnSendEmailClick(Sender: TObject);
 var
-  vMailer: IMailer;
-  I: Integer;
+  mailer: IMailer;
+  i: Integer;
 begin
   inherited;
-  vMailer := TIndyMailerFactory.Build;
+  mailer := TIndyMailer.Create;
 
-  vMailer.Host(EdtHost.Text);
-  vMailer.Port(StrToInt(EdtPort.Text));
-  vMailer.UserName(EdtUserName.Text);
-  vMailer.Password(EdtPassword.Text);
+  mailer.Host(EdtHost.Text);
+  mailer.Port(StrToInt(EdtPort.Text));
+  mailer.UserName(EdtUserName.Text);
+  mailer.Password(EdtPassword.Text);
 
   if CbSSL.Checked then
-    vMailer.SSL();
+    mailer.UsingSSL(True);
 
   if CbTLS.Checked then
-    vMailer.TLS();
+    mailer.UsingTLS(True);
 
   if CbAuth.Checked then
-    vMailer.RequireAuth();
+    mailer.AuthenticationRequired(True);
 
-  vMailer.From(EdtFromName.Text, EdtFromAddress.Text);
+  mailer.From(EdtFromName.Text, EdtFromAddress.Text);
 
-  for I := 0 to Pred(MnmTo.Lines.Count) do
-    vMailer.ToRecipient(MnmTo.Lines[I]);
+  for i := 0 to Pred(MnmTo.Lines.Count) do
+    mailer.ToRecipient(MnmTo.Lines[i]);
 
-  for I := 0 to Pred(MnmCc.Lines.Count) do
-    vMailer.CcRecipient(MnmCc.Lines[I]);
+  for i := 0 to Pred(MnmCc.Lines.Count) do
+    mailer.CcRecipient(MnmCc.Lines[i]);
 
-  for I := 0 to Pred(MnmBcc.Lines.Count) do
-    vMailer.BccRecipient(MnmBcc.Lines[I]);
+  for i := 0 to Pred(MnmBcc.Lines.Count) do
+    mailer.BccRecipient(MnmBcc.Lines[i]);
 
-  for I := 0 to Pred(MnmAttachment.Lines.Count) do
-    vMailer.Attachment(MnmAttachment.Lines[I]);
+  for i := 0 to Pred(MnmAttachment.Lines.Count) do
+    mailer.Attachment(MnmAttachment.Lines[i]);
 
   if CbConfirmation.Checked then
-    vMailer.Confirmation();
+    mailer.AskForConfirmation(True);
 
   if CbHtml.Checked then
-    vMailer.HTML();
+    mailer.UsingHTML(True);
 
-  vMailer.Subject(EdtSubject.Text);
-  vMailer.Message(MnmMessage.Lines.Text);
+  mailer.Subject(EdtSubject.Text);
+  mailer.Message(MnmMessage.Lines.Text);
 
-  vMailer.Send;
+  mailer.Send;
 end;
 
 end.

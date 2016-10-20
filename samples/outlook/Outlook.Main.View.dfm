@@ -1,11 +1,11 @@
-inherited Form2: TForm2
+inherited OutlookMainView: TOutlookMainView
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Outlook Send E-mail'
   ClientHeight = 585
   ClientWidth = 883
   ExplicitWidth = 889
-  ExplicitHeight = 614
+  ExplicitHeight = 613
   PixelsPerInch = 96
   TextHeight = 13
   inherited GroupBox1: TGroupBox
@@ -16,7 +16,7 @@ inherited Form2: TForm2
     inherited EdtPort: TEdit
       Enabled = False
     end
-    inherited EdtUserName: TEdit
+    inherited EdtUsername: TEdit
       Enabled = False
     end
     inherited EdtPassword: TEdit

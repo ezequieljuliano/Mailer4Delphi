@@ -12,6 +12,7 @@ The Mailer4Delphi is available for the following drivers:
 - Indy
 - MAPI
 - Synapse
+- Outlook
 
 You can use the driver that suits you best.
 
@@ -26,16 +27,17 @@ Of course, you must add the path the units of the chosen driver.
 Example of use:
 
     uses
-      Mailer4D, Mailer4D.Driver.Indy;
+      Mailer4D, 
+	  Mailer4D.Driver.Indy;
     
     var
-      vMailer: IMailer;
+      mailer: IMailer;
     begin
       // Here you can create from any driver.
-      vMailer := TIndyMailerFactory.Build;
-      vMailer.Host('smtp.example.com')
+      mailer := TIndyMailer.Create;
+      mailer.Host('smtp.example.com')
     	.Port(587)
-    	.UserName('mailer@example.com')
+    	.Username('mailer@example.com')
     	.Password('password')
     	.From('Test', 'mailer@example.com')
     	.ToRecipient('recipient@testrecipient.com')
