@@ -42,9 +42,14 @@ implementation
 procedure TIndyMailer.AddAttachments(const msg: TIdMessage);
 var
   i: Integer;
+  attachment: TIdAttachmentFile;
 begin
   for i := 0 to Pred(GetAttachments.Count) do
-    TIdAttachmentFile.Create(msg.MessageParts, GetAttachments[i]);
+  begin
+    attachment := TIdAttachmentFile.Create(msg.MessageParts, GetAttachments[i]);
+    attachment.Headers.Add(Format('Content-ID: <%s>',
+      [ExtractFileName(GetAttachments[i])]));
+  end;
 end;
 
 procedure TIndyMailer.AddBccRecipients(const msg: TIdMessage);
