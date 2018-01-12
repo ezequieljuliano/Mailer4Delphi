@@ -110,7 +110,7 @@ begin
       if email.Recipients.ResolveAll then
       begin
         if fShowMailClient then
-          email.Display(True)
+          email.Display(False)
         else
           email.Send;
       end
