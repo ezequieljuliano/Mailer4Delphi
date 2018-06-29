@@ -44,6 +44,8 @@ var
   attachments, a: PMapiFileDesc;
   return: Cardinal;
   i: Integer;
+  sendMailMethod: TFNMapiSendMail;
+  mapiModule: HModule;
 begin
   inherited;
   msg.nRecipCount := GetToRecipients.Count + GetCcRecipients.Count + GetBccRecipients.Count;
@@ -121,10 +123,24 @@ begin
       end;
       msg.lpFiles := attachments;
 
-      if fShowMailClient then
-        return := MapiSendMail(0, fHandle, msg, MAPI_DIALOG or MAPI_LOGON_UI or MAPI_NEW_SESSION, 0)
+      mapiModule := LoadLibrary(PChar(MAPIDLL));
+      if (mapiModule = 0) then
+        return := MAPI_E_FAILURE
       else
-        return := MapiSendMail(0, fHandle, msg, 0, 0);
+      begin
+        try
+          sendMailMethod := GetProcAddress(mapiModule, 'MAPISendMail');
+          if (@sendMailMethod <> nil) then
+          begin
+            if fShowMailClient then
+              return := sendMailMethod(0, fHandle, msg, MAPI_DIALOG or MAPI_LOGON_UI or MAPI_NEW_SESSION, 0)
+            else
+              return := sendMailMethod(0, fHandle, msg, 0, 0);
+          end;
+        finally
+          FreeLibrary(mapiModule);
+        end;
+      end;
 
       if (return <> SUCCESS_SUCCESS) and (return <> MAPI_E_USER_ABORT) then
         RaiseErrorMessage(return);
