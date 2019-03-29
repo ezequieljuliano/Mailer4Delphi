@@ -136,7 +136,9 @@ begin
               return := sendMailMethod(0, fHandle, msg, MAPI_DIALOG or MAPI_LOGON_UI or MAPI_NEW_SESSION, 0)
             else
               return := sendMailMethod(0, fHandle, msg, 0, 0);
-          end;
+          end
+          else
+            return := MAPI_E_FAILURE;
         finally
           FreeLibrary(mapiModule);
         end;
