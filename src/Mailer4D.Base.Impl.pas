@@ -20,6 +20,8 @@ type
     fAuthentication: Boolean;
     fFromName: string;
     fFromAddress: string;
+    fReplyToName: string;
+    fReplyToAddress: string;
     fToRecipient: TStringList;
     fCcRecipient: TStringList;
     fBccRecipient: TStringList;
@@ -38,6 +40,8 @@ type
     function IsWithAuthentication: Boolean;
     function GetFromName: string;
     function GetFromAddress: string;
+    function GetReplyToName: string;
+    function GetReplyToAddress: string;
     function GetToRecipients: TStringList;
     function GetCcRecipients: TStringList;
     function GetBccRecipients: TStringList;
@@ -61,6 +65,7 @@ type
     function AuthenticationRequired(const value: Boolean = True): IMailer;
 
     function From(const name, address: string): IMailer;
+    function ReplyTo(const name, address: string): IMailer;
     function ToRecipient(const address: string): IMailer;
     function CcRecipient(const address: string): IMailer;
     function BccRecipient(const address: string): IMailer;
@@ -209,6 +214,20 @@ begin
   Result := fPort;
 end;
 
+function TBaseMailer.GetReplyToAddress: string;
+begin
+  Result := fReplyToAddress;
+  if Result = '' then
+    Result := fFromAddress;
+end;
+
+function TBaseMailer.GetReplyToName: string;
+begin
+  Result := fReplyToName;
+  if Result = '' then
+    Result := fFromName;
+end;
+
 function TBaseMailer.IsWithSSL: Boolean;
 begin
   Result := fSSL;
@@ -267,6 +286,13 @@ end;
 function TBaseMailer.Port(const value: Integer): IMailer;
 begin
   fPort := value;
+  Result := Self;
+end;
+
+function TBaseMailer.ReplyTo(const name, address: string): IMailer;
+begin
+  fReplyToName := name;
+  fReplyToAddress := address;
   Result := Self;
 end;
 
