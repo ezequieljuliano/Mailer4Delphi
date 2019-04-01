@@ -27,6 +27,7 @@ type
     procedure AddCcRecipients(const msg: TIdMessage);
     procedure AddBccRecipients(const msg: TIdMessage);
     procedure AddFrom(const msg: TIdMessage);
+    procedure AddReplyTo(const msg: TIdMessage);
     procedure AddAttachments(const msg: TIdMessage);
     procedure AddBody(const msg: TIdMessage);
   protected
@@ -42,9 +43,14 @@ implementation
 procedure TIndyMailer.AddAttachments(const msg: TIdMessage);
 var
   i: Integer;
+  attachment: TIdAttachmentFile;
 begin
   for i := 0 to Pred(GetAttachments.Count) do
-    TIdAttachmentFile.Create(msg.MessageParts, GetAttachments[i]);
+  begin
+    attachment := TIdAttachmentFile.Create(msg.MessageParts, GetAttachments[i]);
+    attachment.Headers.Add(Format('Content-ID: <%s>',
+      [ExtractFileName(GetAttachments[i])]));
+  end;
 end;
 
 procedure TIndyMailer.AddBccRecipients(const msg: TIdMessage);
@@ -81,15 +87,19 @@ procedure TIndyMailer.AddFrom(const msg: TIdMessage);
 begin
   msg.From.Address := GetFromAddress;
   msg.From.Name := GetFromName;
-  with msg.ReplyTo.Add do
-  begin
-    Address := GetFromAddress;
-    Name := GetFromName;
-  end;
   if IsWithConfirmation then
   begin
     msg.ReceiptRecipient.Address := GetFromAddress;
     msg.ReceiptRecipient.Name := GetFromName;
+  end;
+end;
+
+procedure TIndyMailer.AddReplyTo(const msg: TIdMessage);
+begin
+  with msg.ReplyTo.Add do
+  begin
+    Address := GetReplyToAddress;
+    Name := GetReplyToName;
   end;
 end;
 
@@ -148,6 +158,7 @@ begin
         AddCcRecipients(msg);
         AddBccRecipients(msg);
         AddFrom(msg);
+        AddReplyTo(msg);
         AddAttachments(msg);
         AddBody(msg);
 

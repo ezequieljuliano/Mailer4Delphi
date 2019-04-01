@@ -21,6 +21,7 @@ type
     function AuthenticationRequired(const value: Boolean = True): IMailer;
 
     function From(const name, address: string): IMailer;
+    function ReplyTo(const name, address: string): IMailer;
     function ToRecipient(const address: string): IMailer;
     function CcRecipient(const address: string): IMailer;
     function BccRecipient(const address: string): IMailer;

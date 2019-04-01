@@ -103,7 +103,7 @@ begin
 
         mime.Header.Date := Now;
         mime.Header.Subject := GetSubject;
-        mime.Header.ReplyTo := GetFromAddress;
+        mime.Header.ReplyTo := GetReplyToAddress;
 
         mimepart := mime.AddPartMultipart('mixed', nil);
 
