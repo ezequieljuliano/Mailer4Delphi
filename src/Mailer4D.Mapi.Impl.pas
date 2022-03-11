@@ -113,7 +113,7 @@ begin
         for I := 0 to Pred(GetAttachments.Count) do
         begin
           a^.lpszPathName := StrNew(PAnsiChar(AnsiString(GetAttachments.Strings[I])));
-          a^.lpszFileName := StrNew(PAnsiChar(AnsiString(GetAttachments.Strings[I])));
+          a^.lpszFileName := StrNew(PAnsiChar(AnsiString(ExtractFileName(GetAttachments.Strings[i]))));
           a^.ulReserved := 0;
           a^.flFlags := 0;
           a^.nPosition := Cardinal($FFFFFFFF);
