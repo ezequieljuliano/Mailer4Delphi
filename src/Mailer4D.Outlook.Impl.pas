@@ -55,7 +55,7 @@ begin
   if IsWithHTML then
   begin
     email.BodyFormat := olFormatHTML;
-    email.HTMLBody := GetMessage.Text;
+    email.HTMLBody := StringReplace(GetMessage.Text, sLineBreak, '<br>', [rfReplaceAll]);
   end
   else
   begin
