@@ -31,6 +31,8 @@ type
 
 implementation
 
+uses
+  System.Classes;
 
 { TSynapseMailer }
 
@@ -43,11 +45,20 @@ begin
 end;
 
 procedure TSynapseMailer.AddBody(const mime: TMimemess; const mimepart: TMimepart);
+var
+  msg: TStrings;
 begin
-  if IsWithHTML then
-    mime.AddPartHTML(GetMessage, mimepart)
-  else
-    mime.AddPartText(GetMessage, mimepart);
+  msg := TStringList.Create;
+  try
+    msg.Text := GetMessage;
+
+    if IsWithHTML then
+      mime.AddPartHTML(msg, mimepart)
+    else
+      mime.AddPartText(msg, mimepart);
+  finally
+    msg.Free;
+  end;
 end;
 
 procedure TSynapseMailer.AddCcRecipients(const mime: TMimemess);

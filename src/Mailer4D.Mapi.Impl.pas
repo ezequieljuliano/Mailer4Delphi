@@ -57,7 +57,7 @@ begin
     try
       msg.ulReserved := 0;
       msg.lpszSubject := PAnsiChar(AnsiString(GetSubject));
-      msg.lpszNoteText := PAnsiChar(AnsiString(GetMessage.Text));
+      msg.lpszNoteText := PAnsiChar(AnsiString(GetMessage));
       msg.lpszMessageType := nil;
       msg.lpszDateReceived := nil;
       msg.lpszConversationID := nil;

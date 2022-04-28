@@ -48,7 +48,7 @@ type
     function IsWithConfirmation: Boolean;
     function GetAttachments: TStringList;
     function GetSubject: string;
-    function GetMessage: TStringList;
+    function GetMessage: string;
     function IsWithHTML: Boolean;
 
     procedure DoSend; virtual; abstract;
@@ -199,9 +199,12 @@ begin
   Result := fHTML;
 end;
 
-function TBaseMailer.GetMessage: TStringList;
+function TBaseMailer.GetMessage: string;
 begin
-  Result := fMessage;
+  if fHTML then
+    Result := StringReplace(fMessage.Text, sLineBreak, '<br>', [rfReplaceAll])
+  else
+    Result := fMessage.Text;
 end;
 
 function TBaseMailer.GetPassword: string;

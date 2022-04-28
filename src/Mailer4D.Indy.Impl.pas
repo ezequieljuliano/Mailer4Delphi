@@ -67,7 +67,7 @@ var
   body: TIdText;
 begin
   body := TIdText.Create(msg.MessageParts);
-  body.Body.Text := GetMessage.Text;
+  body.Body.Text := GetMessage;
   if IsWithHTML then
     body.ContentType := 'text/html; charset="UTF-8"'
   else
